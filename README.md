@@ -4,12 +4,13 @@ Useful extensions on [Result](https://pub.dev/documentation/async/latest/async/R
 
 - `AsyncResult<T>` alias for `Future<Result<T>>`
 - `Result<U> map<U>(U Function(T) f);`
+- ` Result<T> mapError<E extends Object>(E Function(Object error, StackTrace? stackTrace) f);`
 - `Result<U> flatMap<U>(Result<U> Function(T) f);`
 - `U fold<U>(U Function(T value) onSuccess, U Function(Object error, StackTrace? stackTrace) onError);`
 - `T getOrElse(T Function() orElse);`
 - `void match({ void Function(T value)? onSuccess, void Function(Object error, StackTrace? stackTrace)? onError });`
 - `void forEach(void Function(T) f)`
-- `fold`, `map` and `flatMap` also implemented on `AsyncResult<T>`
+- `fold`, `map`, `mapError` and `flatMap` also implemented on `AsyncResult<T>`
 
 ## Usage
 

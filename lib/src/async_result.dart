@@ -18,6 +18,15 @@ extension AsyncResultExtension<T> on AsyncResult<T> {
   /// This function can be used to compose the results of two functions.
   AsyncResult<U> map<U>(U Function(T) f) => then((result) => result.map(f));
 
+  /// Maps an [AsyncResult<T>] to an [AsyncResult<T>] by applying a function
+  /// to a contained [ErrorResult], leaving the [ValueResult] value untouched.
+  ///
+  /// This function can be used to pass through a successful result
+  /// while applying transformation to [ErrorResult].
+  AsyncResult<T> mapError<E extends Object>(
+          E Function(Object error, StackTrace? stackTrace) f) =>
+      then((result) => result.mapError(f));
+
   /// Maps an [AsyncResult<T>] to [AsyncResult<U>] by applying a function
   /// to a contained [ValueResult] value and unwrapping the produced result,
   /// leaving an [ErrorResult] value untouched.

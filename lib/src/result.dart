@@ -40,6 +40,15 @@ extension ResultExtension<T> on Result<T> {
   Result<U> map<U>(U Function(T) f) =>
       isValue ? Result.value(f(asValue!.value)) : this as Result<U>;
 
+  /// Maps a [Result<T>] to [Result<T>] by applying a function
+  /// to a contained [ErrorResult], leaving the [ValueResult] value untouched.
+  ///
+  /// This function can be used to pass through a successful result
+  /// while applying transformation to [ErrorResult].
+  Result<T> mapError<E extends Object>(
+          E Function(Object error, StackTrace? stackTrace) f) =>
+      isError ? Result.error(f(asError!.error, asError!.stackTrace)) : this;
+
   /// Maps a [Result<T>] to [Result<U>] by applying a function
   /// to a contained [ValueResult] value and unwrapping the produced result,
   /// leaving an [ErrorResult] value untouched.

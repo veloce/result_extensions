@@ -39,6 +39,20 @@ void main() {
       expect(error.asError?.error, isA<Exception>());
     });
 
+    test('mapError with success', () async {
+      final result =
+          await getUser(willSucceed: true).mapError((_, __) => 'Another error');
+
+      expect(result.asValue, ValueResult('John'));
+    });
+
+    test('mapError with error', () async {
+      final result = await getUser(willSucceed: false)
+          .mapError((_, __) => 'Another error');
+
+      expect(result.asError?.error, 'Another error');
+    });
+
     test('flatMap with success', () async {
       final result = getUser(willSucceed: true);
       final user = await result.flatMap((i) => Result.value(i.toUpperCase()));
