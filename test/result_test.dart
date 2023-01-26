@@ -4,6 +4,18 @@ import 'package:test/test.dart';
 
 void main() {
   group('Result:', () {
+    test('getOrElse with success', () {
+      final result = getUser(willSucceed: true);
+
+      expect(result.getOrElse(() => 'whatever'), 'John');
+    });
+
+    test('getOrElse with failure', () {
+      final result = getUser(willSucceed: false);
+
+      expect(result.getOrElse(() => 'whatever'), 'whatever');
+    });
+
     test('fold with success', () {
       final result = getUser(willSucceed: true);
 
@@ -62,32 +74,29 @@ void main() {
 
     test('map with success', () {
       final result = getUser(willSucceed: true);
-      final user = result.map<String>((i) => i.toUpperCase()).asValue;
+      final user = result.map((i) => i.toUpperCase()).asValue;
 
       expect(user, ValueResult('JOHN'));
     });
 
     test('map with error', () {
       final result = getUser(willSucceed: false);
-      final error = result.map<String>((i) => i.toUpperCase()).asError?.error;
+      final error = result.map((i) => i.toUpperCase()).asError?.error;
 
       expect(error, isA<Exception>());
     });
 
     test('flatMap with success', () {
       final result = getUser(willSucceed: true);
-      final user =
-          result.flatMap<String>((i) => Result.value(i.toUpperCase())).asValue;
+      final user = result.flatMap((i) => Result.value(i.toUpperCase())).asValue;
 
       expect(user, ValueResult('JOHN'));
     });
 
     test('flatMap with error', () {
       final result = getUser(willSucceed: false);
-      final error = result
-          .flatMap<String>((i) => Result.value(i.toUpperCase()))
-          .asError
-          ?.error;
+      final error =
+          result.flatMap((i) => Result.value(i.toUpperCase())).asError?.error;
 
       expect(error, isA<Exception>());
     });

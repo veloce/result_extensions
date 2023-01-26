@@ -24,13 +24,6 @@ extension ResultExtension<T> on Result<T> {
     }
   }
 
-  /// Maps a [Result<S, F>] to [Result<U, F>] by applying a function
-  /// to a contained [ValueResult] value, leaving an [ErrorResult] value untouched.
-  ///
-  /// This function can be used to compose the results of two functions.
-  Result<U> map<U>(U Function(T) f) =>
-      isValue ? Result.value(f(asValue!.value)) : this as Result<U>;
-
   /// Apply a function to a contained [ValueResult] value
   ///
   /// Equivalent to `match(onSuccess: (value) { // do sth with value })`
@@ -40,7 +33,14 @@ extension ResultExtension<T> on Result<T> {
     }
   }
 
-  /// Maps a [Result<S, F>] to [Result<U, F>] by applying a function
+  /// Maps a [Result<T>] to [Result<U>] by applying a function
+  /// to a contained [ValueResult] value, leaving an [ErrorResult] value untouched.
+  ///
+  /// This function can be used to compose the results of two functions.
+  Result<U> map<U>(U Function(T) f) =>
+      isValue ? Result.value(f(asValue!.value)) : this as Result<U>;
+
+  /// Maps a [Result<T>] to [Result<U>] by applying a function
   /// to a contained [ValueResult] value and unwrapping the produced result,
   /// leaving an [ErrorResult] value untouched.
   ///
