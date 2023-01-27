@@ -4,6 +4,17 @@ extension ResultExtension<T> on Result<T> {
   /// Returns the value from this [ValueResult] or the result of `orElse()` if this is a [ErrorResult].
   T getOrElse(T Function() orElse) => isValue ? asValue!.value : orElse();
 
+  /// Returns the value of this [ValueResult]
+  ///
+  /// Will throw the [ErrorResult] if this result is an error.
+  T getOrThrow() {
+    if (isValue) {
+      return asValue!.value;
+    }
+
+    throw asError!.error;
+  }
+
   /// Applies `onSuccess` if this is a [ValueResult] or `onError` if this is a [ErrorResult].
   U fold<U>(U Function(T value) onSuccess,
           U Function(Object error, StackTrace? stackTrace) onError) =>

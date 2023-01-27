@@ -16,6 +16,18 @@ void main() {
       expect(result.getOrElse(() => 'whatever'), 'whatever');
     });
 
+    test('getOrThrow with success', () {
+      final result = getUser(willSucceed: true);
+
+      expect(result.getOrThrow(), 'John');
+    });
+
+    test('getOrThrow with failure', () {
+      final result = getUser(willSucceed: false);
+
+      expect(result.getOrThrow, throwsA(isA<Exception>()));
+    });
+
     test('fold with success', () {
       final result = getUser(willSucceed: true);
 
