@@ -2,7 +2,7 @@ Useful extensions on [Result](https://pub.dev/documentation/async/latest/async/R
 
 ## Features
 
-- `AsyncResult<T>` alias for `Future<Result<T>>`
+- `FutureResult<T>` alias for `Future<Result<T>>`
 - `Result<U> map<U>(U Function(T) f);`
 - ` Result<T> mapError<E extends Object>(E Function(Object error, StackTrace? stackTrace) f);`
 - `Result<U> flatMap<U>(Result<U> Function(T) f);`

@@ -2,4 +2,4 @@
 library result_extensions;
 
 export 'src/result.dart';
-export 'src/async_result.dart';
+export 'src/future_result.dart';

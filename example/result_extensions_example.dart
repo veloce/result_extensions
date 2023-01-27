@@ -28,7 +28,7 @@ Future<User> fetch(bool withError) async {
   }
 }
 
-AsyncResult fetchResult({required bool withError}) =>
+FutureResult fetchResult({required bool withError}) =>
     Result.capture(fetch(withError));
 
 class User {

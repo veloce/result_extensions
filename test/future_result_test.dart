@@ -3,7 +3,7 @@ import 'package:result_extensions/result_extensions.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('AsyncResult:', () {
+  group('FutureResult:', () {
     test('fold with success', () async {
       final result = await getUser(willSucceed: true)
           .fold((value) => 'Hello, $value', (_, __) => 'oops');
@@ -118,7 +118,7 @@ void main() {
   });
 }
 
-AsyncResult<String> getUser({required bool willSucceed}) =>
+FutureResult<String> getUser({required bool willSucceed}) =>
     Future.value(Result(() {
       if (willSucceed) {
         return 'John';
