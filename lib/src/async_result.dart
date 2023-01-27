@@ -27,6 +27,19 @@ extension AsyncResultExtension<T> on AsyncResult<T> {
           E Function(Object error, StackTrace? stackTrace) f) =>
       then((result) => result.mapError(f));
 
+  /// Execute `onSuccess` in case of [ValueResult] or `onError` in case of [ErrorResult].
+  Future<void> match({
+    void Function(T value)? onSuccess,
+    void Function(Object error, StackTrace? stackTrace)? onError,
+  }) =>
+      then((result) => result.match(onSuccess: onSuccess, onError: onError));
+
+  /// Apply a function to a contained [ValueResult] value
+  ///
+  /// Equivalent to `match(onSuccess: (value) { // do sth with value })`
+  Future<void> forEach(void Function(T) f) =>
+      then((result) => result.forEach(f));
+
   /// Maps an [AsyncResult<T>] to [AsyncResult<U>] by applying a function
   /// to a contained [ValueResult] value and unwrapping the produced result,
   /// leaving an [ErrorResult] value untouched.

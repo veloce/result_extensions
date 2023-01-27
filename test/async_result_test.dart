@@ -25,6 +25,46 @@ void main() {
       expect(result, 'oops');
     });
 
+    test('match with failed', () async {
+      final failedResult = getUser(willSucceed: false);
+
+      String? onSuccessResult;
+      Object? onFailureResult;
+      await failedResult.match(
+        onSuccess: (value) => onSuccessResult = value,
+        onError: (error, _) => onFailureResult = error.toString(),
+      );
+      expect(onSuccessResult, isNull);
+      expect(onFailureResult, 'Exception: Not found');
+    });
+
+    test('match with success', () async {
+      final successResult = getUser(willSucceed: true);
+
+      String? onSuccessResult;
+      Object? onFailureResult;
+      await successResult.match(
+        onSuccess: (value) => onSuccessResult = value,
+        onError: (error, _) => onFailureResult = error,
+      );
+      expect(onSuccessResult, 'John');
+      expect(onFailureResult, isNull);
+    });
+
+    test('forEach with failure', () async {
+      final result = getUser(willSucceed: false);
+      String? test;
+      await result.forEach((value) => test = value);
+      expect(test, isNull);
+    });
+
+    test('forEach with success', () async {
+      final result = getUser(willSucceed: true);
+      String? test;
+      await result.forEach((value) => test = value);
+      expect(test, 'John');
+    });
+
     test('map with success', () async {
       final result = getUser(willSucceed: true);
       final user = await result.map((i) => i.toUpperCase());

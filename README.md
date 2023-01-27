@@ -11,7 +11,6 @@ Useful extensions on [Result](https://pub.dev/documentation/async/latest/async/R
 - `T getOrThrow();`
 - `void match({ void Function(T value)? onSuccess, void Function(Object error, StackTrace? stackTrace)? onError });`
 - `void forEach(void Function(T) f)`
-- `fold`, `map`, `mapError` and `flatMap` also implemented on `AsyncResult<T>`
 
 ## Usage
 
