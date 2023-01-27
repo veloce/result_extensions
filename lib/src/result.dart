@@ -1,6 +1,14 @@
 import 'package:async/async.dart';
+import 'package:riverpod/riverpod.dart';
 
 extension ResultExtension<T> on Result<T> {
+  /// Returns an [AsyncValue] populated with this [Result] data or error.
+  AsyncValue get asAsyncValue => fold(
+        AsyncValue.data,
+        (error, stackTrace) =>
+            AsyncValue.error(error, stackTrace ?? StackTrace.current),
+      );
+
   /// Returns the value from this [ValueResult] or the result of `orElse()` if this is a [ErrorResult].
   T getOrElse(T Function() orElse) => isValue ? asValue!.value : orElse();
 
