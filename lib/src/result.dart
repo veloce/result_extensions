@@ -2,8 +2,8 @@ import 'package:async/async.dart';
 import 'package:riverpod/riverpod.dart';
 
 extension ResultExtension<T> on Result<T> {
-  /// Returns an [AsyncValue] populated with this [Result] data or error.
-  AsyncValue get asAsyncValue => fold(
+  /// Returns an [AsyncValue<T>] populated with this [Result<T>] data or error.
+  AsyncValue<T> get asAsyncValue => fold(
         AsyncValue.data,
         (error, stackTrace) =>
             AsyncValue.error(error, stackTrace ?? StackTrace.current),
