@@ -9,7 +9,7 @@ typedef AsyncResult<T> = Future<Result<T>>;
 extension AsyncResultExtension<T> on AsyncResult<T> {
   /// Applies `onSuccess` if this is a [ValueResult] or `onError` if this is a [ErrorResult].
   Future<U> fold<U>(FutureOr<U> Function(T value) onSuccess,
-          U Function(Object error, StackTrace? stackTrace) onError) =>
+          FutureOr<U> Function(Object error, StackTrace? stackTrace) onError) =>
       then((result) => result.fold(onSuccess, onError));
 
   /// Maps an [AsyncResult<T>] to [AsyncResult<U>] by applying a function
