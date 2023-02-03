@@ -4,6 +4,22 @@ import 'package:test/test.dart';
 
 void main() {
   group('FutureResult:', () {
+    test('guard with success', () async {
+      final result = await FutureResultExtension.guard(
+              () => getUserUnsafe(willSucceed: true))
+          .fold((value) => 'Hello, $value', (_, __) => 'oops');
+
+      expect(result, 'Hello, John');
+    });
+
+    test('guard with failure', () async {
+      final result = await FutureResultExtension.guard(
+              () => getUserUnsafe(willSucceed: false))
+          .fold((value) => 'Hello, $value', (_, __) => 'oops');
+
+      expect(result, 'oops');
+    });
+
     test('fold with success', () async {
       final result = await getUser(willSucceed: true)
           .fold((value) => 'Hello, $value', (_, __) => 'oops');
@@ -126,3 +142,11 @@ FutureResult<String> getUser({required bool willSucceed}) =>
         throw Exception('Not found');
       }
     }));
+
+Future<String> getUserUnsafe({required bool willSucceed}) async {
+  if (willSucceed) {
+    return 'John';
+  } else {
+    throw Exception('Not found');
+  }
+}

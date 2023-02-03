@@ -7,6 +7,15 @@ import './result.dart';
 typedef FutureResult<T> = Future<Result<T>>;
 
 extension FutureResultExtension<T> on FutureResult<T> {
+  /// Executes `computation` and returns a FutureResult while catching any error.
+  static FutureResult<T> guard<T>(Future<T> Function() computation) async {
+    try {
+      return Result.value(await computation());
+    } catch (err, stack) {
+      return Result.error(err, stack);
+    }
+  }
+
   /// Applies `onSuccess` if this is a [ValueResult] or `onError` if this is a [ErrorResult].
   Future<U> fold<U>(FutureOr<U> Function(T value) onSuccess,
           FutureOr<U> Function(Object error, StackTrace? stackTrace) onError) =>
