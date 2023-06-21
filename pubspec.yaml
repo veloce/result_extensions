@@ -4,7 +4,7 @@ version: 0.1.0
 repository: https://github.com/veloce/result_extensions
 
 environment:
-  sdk: '>=2.19.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   async: ^2.10.0
